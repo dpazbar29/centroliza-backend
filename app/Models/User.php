@@ -6,11 +6,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+    protected $table = 'usuarios';
 
     /**
      * The attributes that are mass assignable.
@@ -18,8 +22,12 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'centro_id',
         'name',
         'email',
+        'dni',
+        'role',
+        'status',
         'password',
     ];
 
@@ -44,5 +52,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Relaciones
+    public function centro()
+    {
+        return $this->belongsTo(Centro::class);
+    }
+
+    public function rolesJerarquia()
+    {
+        return $this->hasOne(RolJerarquia::class);
+    }
+
+    public function asignaturas()
+    {
+        return $this->belongsToMany(Asignatura::class, 'profesor_asignatura', 'profesor_id');
     }
 }
