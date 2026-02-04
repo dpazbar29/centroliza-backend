@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EtapaController;
 use App\Http\Controllers\Api\CursoController;
 use App\Http\Controllers\Api\AsignaturaController;
+use App\Http\Controllers\Api\ProfesorController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -23,4 +24,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ASIGNATURAS DE CADA CURSO
     Route::apiResource('centros.etapas.cursos.asignaturas', AsignaturaController::class);
+
+    // PROFESORES DEL CENTRO
+    Route::apiResource('centros.profesores', ProfesorController::class)->parameters(['profesores' => 'profesor']);
 });
