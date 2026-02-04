@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\AsignaturaController;
 use App\Http\Controllers\Api\ProfesorController;
 use App\Http\Controllers\Api\ProfesorAsignaturaController;
 use App\Http\Controllers\Api\AlumnoController;
+use App\Http\Controllers\Api\MatriculaController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -31,11 +32,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('centros.profesores', ProfesorController::class)->parameters(['profesores' => 'profesor']);
 
     // PROFESORES DE CADA ASIGNATURA
-    Route::apiResource('centros.etapas.cursos.asignaturas.profesores', ProfesorAsignaturaController::class);
+    Route::apiResource('centros.etapas.cursos.asignaturas.profesores', ProfesorAsignaturaController::class)->parameters(['profesores' => 'profesor']);
 
     // ALUMNOS DEL CENTRO
     Route::apiResource('centros.alumnos', AlumnoController::class)->only(['index']);
 
-    // ALUMNOS DE CADA CURSO
-    Route::apiResource('centros.etapas.cursos.alumnos', AlumnoController::class)->only(['index']);
+    // ALUMNOS POR CURSO
+    Route::apiResource('centros.etapas.cursos.matriculas', MatriculaController::class)->only(['index']);
 });

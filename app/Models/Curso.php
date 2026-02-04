@@ -25,8 +25,13 @@ class Curso extends Model
         return $this->hasMany(Asignatura::class);
     }
 
+    public function matriculas()
+    {
+        return $this->hasMany(Matricula::class);
+    }
+
     public function alumnos()
     {
-        return $this->hasMany(Alumno::class);
+        return $this->belongsToMany(User::class, 'matriculas', 'curso_id', 'alumno_id');
     }
 }

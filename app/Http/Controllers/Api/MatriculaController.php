@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Models\Centro;
+use App\Models\Etapa;
+use App\Models\Curso;
+use App\Models\Matricula;
 use Illuminate\Http\Request;
 
-class AlumnoController extends Controller
+class MatriculaController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
-    // TODOS los alumnos del centro
-    public function index(Centro $centro)
+    public function index(Centro $centro, Etapa $etapa, Curso $curso)
     {
-        $alumnos = User::where('centro_id', $centro->id)->where('role', 'alumno')->get(['id', 'name', 'email', 'dni']);
-        return response()->json($alumnos);
+        $matriculas = Matricula::with('alumno:id,name,email,dni')->where('curso_id', $curso->id)->select('alumno_id', 'curso_id', 'tutor_id')->get()->pluck('alumno');
+        return response()->json($matriculas);
     }
 
     /**

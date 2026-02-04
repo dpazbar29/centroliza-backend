@@ -69,4 +69,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Asignatura::class, 'profesor_asignatura', 'profesor_id');
     }
+
+    public function matriculas()
+    {
+        return $this->hasMany(Matricula::class, 'alumno_id');
+    }
+
+    public function cursos()
+    {
+        return $this->belongsToMany(Curso::class, 'matriculas')->using(Matricula::class);
+    }
 }
