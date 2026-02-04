@@ -9,5 +9,5 @@ class ProfesorAsignatura extends Pivot
 {
     use HasFactory;
 
-    protected $table = 'profesor_asignatura';
+    protected $table = 'profesor_asignaturas';
 }

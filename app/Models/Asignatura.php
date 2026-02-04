@@ -22,6 +22,6 @@ class Asignatura extends Model
 
     public function profesores()
     {
-        return $this->belongsToMany(User::class, 'profesor_asignatura', 'asignatura_id', 'profesor_id');
+        return $this->belongsToMany(User::class, 'profesor_asignaturas', 'asignatura_id', 'profesor_id');
     }
 }
