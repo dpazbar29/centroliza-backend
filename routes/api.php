@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EtapaController;
 use App\Http\Controllers\Api\CursoController;
+use App\Http\Controllers\Api\AsignaturaController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -19,4 +20,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // CURSOS DE CADA ETAPA
     Route::apiResource('centros.etapas.cursos', CursoController::class);
+
+    // ASIGNATURAS DE CADA CURSO
+    Route::apiResource('centros.etapas.cursos.asignaturas', AsignaturaController::class);
 });
