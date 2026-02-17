@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('etapa_id')->constrained('etapas')->onDelete('cascade');
             $table->string('nombre');
+            $table->string('codigo_curso')->nullable();
+            $table->year('ano_academico');
             $table->timestamps();
             
             $table->unique(['etapa_id', 'nombre']);

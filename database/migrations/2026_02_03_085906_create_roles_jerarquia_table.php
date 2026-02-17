@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->foreignId('centro_id')->constrained('centros')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('usuarios')->onDelete('cascade');
-            $table->enum('tipo', ['directivo', 'jefe_estudios']);
-            $table->unique(['centro_id', 'user_id']); // Un usuario un rol jerarquía por centro
+            $table->enum('tipo', ['directivo', 'jefe_estudios', 'coordinador', 'tutor'])->default('directivo');
+            $table->tinyInteger('orden_prioridad')->default(0);
+            $table->date('fecha_asignacion');
             $table->timestamps();
+
+            $table->unique(['centro_id', 'user_id'], 'centro_user_unique');
+            $table->index(['centro_id', 'orden_prioridad']);
         });
     }
 

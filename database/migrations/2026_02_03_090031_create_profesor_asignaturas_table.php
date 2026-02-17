@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('profesor_id')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('asignatura_id')->constrained('asignaturas')->onDelete('cascade');
+            $table->year('ano_academico');
+            $table->tinyInteger('horas_asignadas')->default(0);
             $table->timestamps();
             
             $table->unique(['profesor_id', 'asignatura_id']);

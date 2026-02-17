@@ -13,6 +13,7 @@ class Centro extends Model
         'nombre',
         'slug',
         'email_director',
+        'telefono',
     ];
 
     // Relaciones
@@ -31,8 +32,8 @@ class Centro extends Model
         return $this->hasMany(Etapa::class);
     }
 
-    public function alumnos()
+    public function avisos()
     {
-        return $this->hasMany(Alumno::class);
+        return $this->hasMany(Aviso::class);
     }
 }

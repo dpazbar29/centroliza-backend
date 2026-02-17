@@ -12,6 +12,12 @@ class Curso extends Model
     protected $fillable = [
         'etapa_id',
         'nombre',
+        'codigo_curso',
+        'ano_academico',
+    ];
+
+    protected $casts = [
+        'ano_academico' => 'date:Y',
     ];
 
     // Relaciones
@@ -34,4 +40,10 @@ class Curso extends Model
     {
         return $this->belongsToMany(User::class, 'matriculas', 'curso_id', 'alumno_id');
     }
+
+    public function grupos()
+    {
+        return $this->hasMany(Grupo::class);
+    }
+
 }

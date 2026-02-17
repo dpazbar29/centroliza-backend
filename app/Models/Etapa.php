@@ -12,6 +12,8 @@ class Etapa extends Model
     protected $fillable = [
         'centro_id',
         'nombre',
+        'orden',
+        'anos_duracion',
     ];
 
     // Relaciones

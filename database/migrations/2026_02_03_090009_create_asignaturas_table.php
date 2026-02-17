@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('curso_id')->constrained('cursos')->onDelete('cascade');
             $table->string('nombre');
+            $table->string('codigo')->nullable();
+            $table->tinyInteger('horas_semanales');
+            $table->enum('tipo', ['troncal', 'especifica', 'optativa'])->default('troncal');
             $table->timestamps();
             
             $table->unique(['curso_id', 'nombre']);

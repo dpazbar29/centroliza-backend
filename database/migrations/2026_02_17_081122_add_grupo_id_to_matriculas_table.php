@@ -11,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('matriculas', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        Schema::table('matriculas', function (Blueprint $table) {
+        $table->foreignId('grupo_id')->nullable()->after('tutor_id')->constrained()->nullOnDelete();
+});
     }
 
     /**
@@ -22,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matriculas');
+        Schema::table('matriculas', function (Blueprint $table) {
+            //
+        });
     }
 };

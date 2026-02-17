@@ -15,6 +15,13 @@ class RolJerarquia extends Model
         'centro_id',
         'user_id',
         'tipo',
+        'orden_prioridad',
+        'fecha_asignacion',
+    ];
+
+    protected $casts = [
+        'fecha_asignacion' => 'date',
+        'orden_prioridad' => 'integer',
     ];
 
     // Relaciones
@@ -25,6 +32,16 @@ class RolJerarquia extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function scopeOrdenados($query)
+    {
+        return $query->orderBy('orden_prioridad')->orderBy('fecha_asignacion');
+    }
+
+    public function scopeDelCentro($query, $centroId)
+    {
+        return $query->where('centro_id', $centroId);
     }
 }

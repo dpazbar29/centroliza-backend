@@ -12,6 +12,9 @@ class Asignatura extends Model
     protected $fillable = [
         'curso_id',
         'nombre',
+        'codigo',
+        'horas_semanales',
+        'tipo',
     ];
 
     // Relaciones
@@ -24,4 +27,10 @@ class Asignatura extends Model
     {
         return $this->belongsToMany(User::class, 'profesor_asignaturas', 'asignatura_id', 'profesor_id');
     }
+
+    public function grupos()
+    {
+        return $this->hasMany(Grupo::class);
+    }
+
 }

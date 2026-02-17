@@ -16,6 +16,9 @@ return new class extends Migration
             $table->foreignId('alumno_id')->constrained('usuarios')->onDelete('cascade');
             $table->foreignId('curso_id')->constrained()->onDelete('cascade');
             $table->foreignId('tutor_id')->nullable()->constrained('usuarios');
+            $table->date('fecha_matricula')->nullable();
+            $table->enum('estado', ['activa', 'suspendida', 'baja'])->default('activa');
+            $table->date('fecha_baja')->nullable();
             $table->timestamps();
     
             $table->unique(['alumno_id', 'curso_id']);

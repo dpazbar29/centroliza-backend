@@ -26,6 +26,8 @@ class User extends Authenticatable
         'name',
         'email',
         'dni',
+        'fecha_nacimiento',
+        'telefono',
         'role',
         'status',
         'password',
@@ -60,9 +62,9 @@ class User extends Authenticatable
         return $this->belongsTo(Centro::class);
     }
 
-    public function rolesJerarquia()
+    public function rolJerarquia()
     {
-        return $this->hasOne(RolJerarquia::class);
+        return $this->hasOne(RolJerarquia::class, 'user_id');
     }
 
     public function asignaturas()
@@ -73,6 +75,11 @@ class User extends Authenticatable
     public function matriculas()
     {
         return $this->hasMany(Matricula::class, 'alumno_id');
+    }
+
+    public function matriculasTutor()
+    {
+        return $this->hasMany(Matricula::class, 'tutor_id');
     }
 
     public function cursos()

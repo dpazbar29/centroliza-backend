@@ -17,9 +17,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('dni')->unique()->nullable();
+            $table->timestamp('fecha_nacimiento')->nullable();
+            $table->string('telefono')->nullable();
             $table->enum('role', ['director', 'directivo', 'jefe_estudios', 'profesor', 'alumno', 'padre'])->default('alumno');
             $table->enum('status', ['pending', 'active'])->default('pending');
             $table->string('password');
+            $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
         });
     }

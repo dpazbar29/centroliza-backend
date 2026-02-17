@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('centro_id')->constrained('centros')->onDelete('cascade');
             $table->string('nombre');
+            $table->tinyInteger('orden')->default(0);
+            $table->tinyInteger('anos_duracion');
             $table->timestamps();
 
             $table->unique(['centro_id', 'nombre']);

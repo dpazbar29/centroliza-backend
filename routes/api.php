@@ -9,6 +9,11 @@ use App\Http\Controllers\Api\ProfesorController;
 use App\Http\Controllers\Api\ProfesorAsignaturaController;
 use App\Http\Controllers\Api\AlumnoController;
 use App\Http\Controllers\Api\MatriculaController;
+use App\Http\Controllers\Api\CentroController;
+use App\Http\Controllers\Api\RolJerarquiaController;
+use App\Http\Controllers\Api\AsistenciaController;
+use App\Http\Controllers\Api\GrupoController;
+use App\Http\Controllers\Api\EvaluacionController;
 
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -39,4 +44,19 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ALUMNOS POR CURSO
     Route::apiResource('centros.etapas.cursos.matriculas', MatriculaController::class)->only(['index']);
+
+    // GRUPOS
+    Route::apiResource('centros.etapas.cursos.asignaturas.grupos', GrupoController::class);
+    
+    // ASISTENCIAS
+    Route::apiResource('centros.etapas.cursos.asignaturas.grupos.asistencias', AsistenciaController::class);
+
+    // EVALUACIONES
+    Route::apiResource('centros.etapas.cursos.asignaturas.grupos.evaluaciones', EvaluacionController::class);
+
+    // AVISOS
+    Route::apiResource('centros.avisos', AvisoController::class);
+
+    // ROLES JERARQUIA
+    Route::apiResource('centros.roles-jerarquia', RolJerarquiaController::class);
 });
