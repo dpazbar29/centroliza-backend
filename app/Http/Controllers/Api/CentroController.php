@@ -107,4 +107,20 @@ class CentroController extends Controller
         
         return response()->json(['message' => 'Centro eliminado']);
     }
+
+    public function unirse(Request $request, Centro $centro)
+    {
+        $user = $request->user();
+    
+        if ($user->centro_id) {
+            return response()->json(['error' => 'Ya tienes un centro asignado'], 400);
+        }
+    
+        $user->update(['centro_id' => $centro->id]);
+    
+        return response()->json([
+            'message' => 'Te has unido al centro "' . $centro->nombre . '" exitosamente (ID: ' . $centro->id . ')',
+            'centro' => $centro->only(['id', 'nombre'])
+        ]);
+    }
 }

@@ -60,4 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // ROLES JERARQUIA
     Route::apiResource('centros.roles-jerarquia', RolJerarquiaController::class);
+
+    // UNIRSE A CENTRO
+    Route::post('centros/{centro}/unirse', [CentroController::class, 'unirse']);
 });
