@@ -22,9 +22,13 @@ class CentroController extends Controller
         $centro = Centro::withCount([
             'usuarios as alumnos_count' => fn($q) => $q->where('role', 'alumno'),
             'usuarios as profesores_count' => fn($q) => $q->where('role', 'profesor'),
-            'etapas.cursos'
+            'etapas as etapas_count'
         ])
-        ->findOrFail($request->user()->centro_id);
+        ->find($request->user()->centro_id);
+
+        if (!$centro) {
+            return response()->json([], 200);
+        }
         
         return response()->json([$centro]);
     }
