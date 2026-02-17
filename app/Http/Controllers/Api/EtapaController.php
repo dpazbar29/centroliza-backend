@@ -14,7 +14,7 @@ class EtapaController extends Controller
      */
     public function index(Centro $centro)
     {
-        $etapas = $centro->etapas()->orderBy('orden')->get(['id', 'nombre', 'orden']);
+        $etapas = $centro->etapas()->withCount('cursos')->orderBy('orden')->get(['id', 'nombre', 'orden']);
         return response()->json($etapas);
     }
 
