@@ -16,13 +16,14 @@ use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\EvaluacionController;
 
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
     
     // CENTROS
-    Route::apiResource('centros', \App\Http\Controllers\Api\CentroController::class)->only(['index', 'show']);
+    Route::apiResource('centros', CentroController::class)->only(['index', 'show', 'store']);
     
     // ETAPAS ANIDADAS EN CENTRO
     Route::apiResource('centros.etapas', EtapaController::class);
