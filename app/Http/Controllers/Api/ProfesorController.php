@@ -14,13 +14,9 @@ class ProfesorController extends Controller
      */
     public function index(Centro $centro)
     {
-        $profesores = $centro->usuarios()
-            ->where('role', 'profesor')
-            ->where('status', 'active')
-            ->orderBy('name')
-            ->get(['id', 'name', 'email', 'dni', 'telefono']);
-            
-        return response()->json($profesores);
+        $profesores = User::where('centro_id', $centro->id)->where('role', 'profesor')->select('id', 'name', 'email', 'dni')->get();
+        
+    return response()->json($profesores);
     }
 
     /**
