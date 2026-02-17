@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function asignaturas()
     {
-        return $this->belongsToMany(Asignatura::class, 'profesor_asignatura', 'profesor_id');
+        return $this->belongsToMany(Asignatura::class, 'profesor_asignaturas', 'profesor_id');
     }
 
     public function matriculas()

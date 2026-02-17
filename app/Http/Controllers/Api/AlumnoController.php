@@ -75,6 +75,7 @@ class AlumnoController extends Controller
             'email' => 'sometimes|email|unique:usuarios,email,' . $alumno->id,
             'dni' => 'sometimes|string|unique:usuarios,dni,' . $alumno->id . '|max:9',
             'telefono' => 'sometimes|string|max:15',
+            'fecha_nacimiento' => 'nullable|date|before:today',
             'status' => 'sometimes|in:pending,active',
         ]);
 

@@ -14,7 +14,7 @@ class ProfesorController extends Controller
      */
     public function index(Centro $centro)
     {
-        $profesores = User::where('centro_id', $centro->id)->where('role', 'profesor')->select('id', 'name', 'email', 'dni')->get();
+        $profesores = User::where('centro_id', $centro->id)->where('role', 'profesor')->select('id', 'name', 'email', 'dni', 'telefono', 'fecha_nacimiento')->get();
         
     return response()->json($profesores);
     }
@@ -29,6 +29,7 @@ class ProfesorController extends Controller
             'email' => 'required|email|unique:usuarios,email',
             'dni' => 'nullable|string|unique:usuarios,dni|max:9',
             'telefono' => 'nullable|string|max:15',
+            'fecha_nacimiento' => 'nullable|date',
             'password' => 'required|string|min:8|confirmed',
         ]);
 
@@ -68,6 +69,7 @@ class ProfesorController extends Controller
             'email' => 'sometimes|email|unique:usuarios,email,' . $profesor->id,
             'dni' => 'sometimes|string|unique:usuarios,dni,' . $profesor->id . '|max:9',
             'telefono' => 'sometimes|string|max:15',
+            'fecha_nacimiento' => 'sometimes|date|nullable',
         ]);
 
         $profesor->update($data);
