@@ -49,8 +49,7 @@ class AuthController extends Controller
             'telefono' => 'nullable|string|max:20',
         ]);
 
-        // Para directores: centro_id = NULL temporalmente
-        $centroId = $request->role === 'director' ? null : 1; // Cambiar por lógica real después
+        $centroId = null;
 
         $user = User::create([
             'centro_id' => $centroId,
