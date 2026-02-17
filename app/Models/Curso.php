@@ -17,7 +17,7 @@ class Curso extends Model
     ];
 
     protected $casts = [
-        'ano_academico' => 'date:Y',
+        'ano_academico' => 'integer',
     ];
 
     // Relaciones

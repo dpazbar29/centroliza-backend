@@ -16,7 +16,7 @@ class CursoController extends Controller
     public function index(Centro $centro, Etapa $etapa)
     {
         if ($etapa->centro_id !== $centro->id) abort(404);
-        $cursos = $etapa->cursos()->orderBy('ano_academico')->get(['id', 'nombre', 'codigo_curso', 'ano_academico']);
+        $cursos = $etapa->cursos()->withCount('asignaturas')->orderBy('ano_academico')->get(['id', 'nombre', 'codigo_curso', 'ano_academico']);
         return response()->json($cursos);
     }
 
