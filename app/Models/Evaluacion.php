@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Evaluacion extends Model
 {
     use HasFactory;
+    
+    public $table = 'evaluaciones';
 
     protected $fillable = [
         'alumno_id',

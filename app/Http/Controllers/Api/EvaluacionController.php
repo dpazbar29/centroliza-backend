@@ -9,8 +9,10 @@ use Illuminate\Http\Request;
 
 class EvaluacionController extends Controller
 {
-    public function index(Grupo $grupo)
+    public function index($grupoId)
     {
+        $grupo = Grupo::findOrFail($grupoId);
+
         if ($grupo->curso->etapa->centro_id !== auth()->user()->centro_id) {
             abort(403);
         }

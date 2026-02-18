@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\RolJerarquiaController;
 use App\Http\Controllers\Api\AsistenciaController;
 use App\Http\Controllers\Api\GrupoController;
 use App\Http\Controllers\Api\EvaluacionController;
+use App\Http\Controllers\Api\AvisoController;
 
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
