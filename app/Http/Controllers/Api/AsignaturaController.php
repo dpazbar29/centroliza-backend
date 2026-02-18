@@ -15,13 +15,14 @@ class AsignaturaController extends Controller
      * Display a listing of the resource.
      */
     public function index(Centro $centro, Etapa $etapa, Curso $curso)
-    {
-        if ($curso->etapa->centro_id !== $centro->id) abort(404);
-        $asignaturas = $curso->asignaturas()->orderBy('horas_semanales', 'desc')->get([
-            'id', 'nombre', 'codigo', 'horas_semanales', 'tipo'
-        ]);
-        return response()->json($asignaturas);
-    }
+{
+    if ($curso->etapa->centro_id !== $centro->id) abort(404);
+    
+    $asignaturas = $curso->asignaturas()
+        ->with('grupos.profesorTutor')->orderBy('horas_semanales', 'desc')->get(['id', 'nombre', 'codigo', 'horas_semanales', 'tipo']);
+        
+    return response()->json($asignaturas);
+}
 
     /**
      * Store a newly created resource in storage.
