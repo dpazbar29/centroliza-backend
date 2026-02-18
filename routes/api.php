@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('centros.etapas.cursos.asignaturas.profesores', ProfesorAsignaturaController::class)->parameters(['profesores' => 'profesor']);
 
     // ALUMNOS DEL CENTRO
-    Route::apiResource('centros.alumnos', AlumnoController::class)->only(['index']);
+    Route::apiResource('centros.alumnos', AlumnoController::class);
 
     // ALUMNOS POR CURSO
     Route::apiResource('centros.etapas.cursos.matriculas', MatriculaController::class)->only(['index']);

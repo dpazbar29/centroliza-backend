@@ -20,7 +20,7 @@ class AlumnoController extends Controller
             ->where('role', 'alumno')
             ->where('status', 'active')
             ->orderBy('name')
-            ->get(['id', 'name', 'email', 'dni', 'telefono']);
+            ->get(['id', 'name', 'email', 'dni', 'telefono', 'fecha_nacimiento']);
             
         return response()->json($alumnos);
     }
@@ -41,7 +41,8 @@ class AlumnoController extends Controller
 
         $data['centro_id'] = $centro->id;
         $data['role'] = 'alumno';
-        $data['status'] = 'pending';
+        // $data['status'] = 'pending';
+        $data['status'] = auth()->user()->role === 'director' ? 'active' : 'pending';
         $data['password'] = bcrypt($data['password']);
 
         $alumno = User::create($data);
