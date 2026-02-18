@@ -10,42 +10,62 @@ use Carbon\Carbon;
 
 class AsistenciaController extends Controller
 {
-    public function index(Grupo $grupo)
+    public function index($grupo)
     {
-        if ($grupo->curso->etapa->centro_id !== auth()->user()->centro_id) {
-            abort(403);
-        }
+        $grupo = Grupo::findOrFail($grupo);
 
-        $asistencias = $grupo->asistencias()->with(['alumno:id,name'])->whereDate('fecha', Carbon::today())->orderBy('alumno_id')->get();
+        $asistencias = $grupo->asistencias()
+            ->with(['alumno:id,name'])
+            ->whereDate('fecha', today())
+            ->orderBy('alumno_id')
+            ->get();
 
-        return response()->json($asistencias);
+        $alumnosGrupo = $grupo->matriculas()
+            ->where('estado', 'activa')
+            ->pluck('alumno_id')
+            ->toArray();
+
+        return response()->json([
+            'asistencias' => $asistencias,
+            'alumnos_grupo' => $alumnosGrupo
+        ]);
     }
 
-    public function store(Request $request, Grupo $grupo)
+    public function store(Request $request, $grupoId)
     {
+        $grupo = Grupo::findOrFail($grupoId);
+
         if ($grupo->curso->etapa->centro_id !== auth()->user()->centro_id) {
             abort(403);
         }
 
         $data = $request->validate([
             'alumno_id' => 'required|exists:usuarios,id',
-            'estado' => 'required|in:presente,ausente,justificada,tardia',
+            'estado' => 'required|in:presente,ausente,justificada,retraso',
             'hora_entrada' => 'nullable|date_format:H:i',
             'justificacion' => 'nullable|string|max:500',
             'tipo' => 'sometimes|in:normal,examen,actividad',
         ]);
 
-        $matricula = $grupo->matriculas()->where('alumno_id', $data['alumno_id'])->where('estado', 'activa')->firstOrFail();
+        $matricula = $grupo->matriculas()
+            ->where('alumno_id', $data['alumno_id'])
+            ->where('estado', 'activa')
+            ->firstOrFail();
 
-        $existente = Asistencia::where('grupo_id', $grupo->id)->where('alumno_id', $data['alumno_id'])->whereDate('fecha', Carbon::today())->first();
+        $existente = Asistencia::where('grupo_id', $grupo->id)
+            ->where('alumno_id', $data['alumno_id'])
+            ->whereDate('fecha', Carbon::parse($data['fecha'] ?? Carbon::today()))
+            ->first();
 
         if ($existente) {
-            return response()->json(['error' => 'Asistencia ya registrada hoy'], 422);
+            $existente->update($data);
+            $asistencia = $existente->fresh()->load('alumno');
+        } else {
+            $asistencia = $grupo->asistencias()->create(array_merge($data, [
+                'fecha' => Carbon::parse($data['fecha']),
+                'hora_entrada' => now()->format('H:i:s'),
+            ]));
         }
-
-        $asistencia = $grupo->asistencias()->create(array_merge($data, [
-            'fecha' => Carbon::today(),
-        ]));
 
         return response()->json($asistencia->load('alumno'), 201);
     }
